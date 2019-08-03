@@ -1,0 +1,70 @@
+<?php hook('advertising','getAdFooter',array());?>
+<div class="aw-footer-wrap">
+    <div class="aw-footer">
+        <div class="container">
+            <div class="row aw-footer-top">
+                <div class="col-sm-6 col-lg-6">
+                    <h4><?php echo get_setting('site_name'); ?></h4>
+                    <p><?php echo get_setting('description'); ?></p>
+                </div>
+                <div class="col-sm-6  col-lg-5 col-lg-offset-1">
+                    <div class="row about">
+                        <div class="col-xs-4">
+                            <h4>关于我们</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="/about/" target="_blank" rel="nofollow">关于我们</a></li>
+                                <li><a href="/contacts/" target="_blank" rel="nofollow">联系我们</a></li>
+                                <li><a href="/copyright/" target="_blank" rel="nofollow">版权声明</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-4">
+                            <h4>合作信息</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="/advertise/" target="_blank" rel="nofollow">广告投放</a></li>
+                                <li><a href="/job/" target="_blank" rel="nofollow">招聘信息</a></li>
+                                <li><a href="/links/" target="_blank" rel="nofollow">友情链接</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-4">
+                            <h4>技术支持</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="http://www.wecenter.com/" target="_blank" rel="nofollow">Wecenter</a></li>
+                                <li><a href="https://cloud.tencent.com/" target="_blank" rel="nofollow">Tencent Cloud</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row aw-footer-bottom">
+                <ul class="list-inline text-center">
+                    <li><a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow"><?php echo get_setting('icp_beian'); ?></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a class="aw-back-top hidden-xs" href="javascript:;" onclick="$.scrollTo(1, 600, {queue:true});"><i
+            class="icon icon-up"></i></a>
+
+<?php echo get_setting('statistic_code'); ?>
+
+<!-- DO NOT REMOVE -->
+<div id="aw-ajax-box" class="aw-ajax-box"></div>
+
+<div style="display:none;" id="__crond">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#__crond').html(unescape('%3Cimg%20src%3D%22' + G_BASE_URL + '/crond/run/<?php echo TIMESTAMP; ?>%22%20width%3D%221%22%20height%3D%221%22%20/%3E'));
+        });
+    </script>
+</div>
+<?php hook('bd_push','auto_push',array());?>
+
+<?php TPL::output('global/debuger.tpl.htm'); ?>
+<!-- / DO NOT REMOVE -->
+
+</body>
+</html>

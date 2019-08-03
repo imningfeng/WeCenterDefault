@@ -1,0 +1,130 @@
+<?php TPL::output('global/header.tpl.htm'); ?>
+
+<div class="aw-container-wrap">
+	<?php TPL::output('block/content_nav_menu.tpl.htm'); ?>
+
+	<div class="container">
+		<div class="row">
+			<div class="aw-content-wrap clearfix">
+				<div class="col-sm-12 col-md-9 aw-main-content">
+					<div class="aw-mod aw-article-list">
+						<?php if ($this->article_list) { ?>
+						<?php foreach ($this->article_list AS $key => $val) { ?>
+						<div class="aw-item">
+							<a class="aw-user-name hidden-xs" href="people/<?php echo $val['user_info']['uid']; ?>">
+								<img alt="" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" />
+							</a>
+							<div class="aw-content">
+								<div class="mod-body">
+									<h2><a href="article/<?php echo $val['id']; ?>"><?php echo $val['title']; ?></a></h2>
+									<div class="aw-topic-bar">
+										<div class="tag-bar clearfix">
+											<?php foreach($this->article_topics[$val['id']] as $topic_key => $topic_val) { ?>
+											<span class="topic-tag">
+												<a href="topic/<?php echo $topic_val['topic_id']; ?>" class="text" data-id="<?php echo $topic_val['topic_id']; ?>"><?php echo $topic_val['topic_title']; ?></a>
+											</span>
+											<?php } ?>
+										</div>
+									</div>
+									<div class="content-wrap">
+										<div class="content" id="detail_<?php echo $val['id']; ?>">
+											<div class="hide-content markitup-box" onclick="window.location.href='article/<?php echo $val['id']; ?>'" style='cursor: pointer;'>
+												<?php echo chinese_msubstr(html_entity_decode(FORMAT::parse_attachs(nl2br(FORMAT::parse_bbcode($val['message'])))),0,130); ?>
+
+											</div>
+
+											<?php if (cjk_strlen($val['message']) > 130) { ?>
+								        	<a class="more" href="#" onclick="AWS.content_switcher($('#detail_<?php echo $val['id']; ?>'), $('#detail_more_<?php echo $val['id']; ?>')); return false;"><?php _e('继续阅读'); ?> »</a>
+								        	<?php } ?>
+										</div>
+
+										<div class="content markitup-box collapse" id="detail_more_<?php echo $val['id']; ?>">
+											<?php echo html_entity_decode(FORMAT::parse_attachs(nl2br(FORMAT::parse_bbcode($val['message'])))); ?>
+											<?php if (cjk_strlen($val['message']) > 130) { ?>
+								        	<a class="more" href="#" onclick="AWS.content_switcher($('#detail_more_<?php echo $val['id']; ?>'), $('#detail_<?php echo $val['id']; ?>')); return false;"><?php _e('收起阅读'); ?> »</a>
+								        	<?php } ?>
+										</div>
+									</div>
+								</div>
+								<div class="mod-footer clearfix">
+									<span class="pull-right more-operate text-color-999">
+										<?php echo $val['user_info']['user_name']; ?> <?php _e('发表于 :');?> <?php echo date_friendly($val['add_time']); ?>
+
+										<a class="text-color-999" href="article/<?php echo $val['id']; ?>"><i class="icon icon-comment"></i> <?php _e('评论'); ?> (<?php echo $val['comments']; ?>)</a>
+										<a class="text-color-999 dropdown-toggle" data-toggle="dropdown" article-id="<?php echo $val['id'];?>" article-title="<?php echo $val['title'];?>" onclick="question_comment_share(this)">
+											<i class="icon icon-share"></i> <?php _e('分享'); ?>
+										</a>
+										<div class="aw-dropdown shareout pull-right bdsharebuttonbox">
+											<ul class="aw-dropdown-list">
+						                    	<li><a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到微信"> 微信</a></li>
+						                        <li><a href="javascript:;" class="bds_sqq" data-cmd="sqq" title="分享到QQ"> QQ</a></li>
+						                        <li><a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"> 微博</a></li>
+						                        <li><a href="javascript:;" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"> 空间</a></li>
+											</ul>
+										</div>
+									</span>
+								</div>
+							</div>
+						</div>
+						<?php } ?>
+
+						<?php echo $this->pagination; ?>
+
+						<?php } ?>
+					</div>
+					<!-- end 文章列表 -->
+				</div>
+				<!-- 侧边栏 -->
+				<div class="col-sm-3 col-md-3 aw-side-bar hidden-xs hidden-sm">
+					<!-- 热门文章 -->
+					<div class="aw-mod aw-text-align-justify">
+						<div class="mod-head">
+							<h3><?php _e('热门文章'); ?></h3>
+						</div>
+						<div class="mod-body">
+							<ul>
+								<?php foreach($this->hot_articles AS $key => $val) { ?>
+								<li><a href="article/<?php echo $val['id']; ?>"><?php echo $val['title']; ?></a></li>
+								<?php } ?>
+							</ul>
+						</div>
+					</div>
+					<!-- end 热门文章 -->
+					<?php TPL::output('block/sidebar_hot_topics.tpl.htm'); ?>
+				</div>
+				<!-- end 侧边栏 -->
+			</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" id="share_content" value=""/>
+<input type="hidden" id="share_url" value=""/>
+<input type="hidden" id="share_title" value=""/>
+<script type="text/javascript">
+function question_comment_share(obj){
+	var title=$(obj).attr('article-title');
+	var id=$(obj).attr('article-id');
+    $('#share_content').val(title);
+    $('#share_title').val(title);
+    $('#share_url').val(G_BASE_URL + '/article/'+id);
+}
+window._bd_share_config={
+    "common":{
+        bdText : '<?php echo htmlspecialchars_decode($this->question_info["question_content"]);?>',
+        bdDesc : '<?php echo htmlspecialchars_decode($this->question_info["question_content"]);?>',
+        bdUrl : G_BASE_URL + '/question/<?php echo $this->question_info["question_id"];?>',
+        onBeforeClick:function(cmd,config){
+            return {bdText:$('#share_content').val(),
+                bdDesc:$('#share_title').val(),
+                bdUrl:$('#share_url').val()
+            }
+
+        }
+    },
+    "share" : [{
+        bdCustomStyle :"/static/api/css/share.css",
+    }]
+};
+with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<?php TPL::output('global/footer.tpl.htm'); ?>
