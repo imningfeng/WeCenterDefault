@@ -54,7 +54,5 @@ About about
 
 ## 其他备注
 1. 注意：这个模板会覆盖掉默认模板文件，介意请不要使用。为防止意外，请各位自己做好网站备份！！！
-
-2、未登录用户，网站首页会显示一个banner，不喜欢的同学可以去把这个文件删掉，或者清空里面的内容：/views/default/global/guest_banner.tpl.htm  
-
-3、模板只有PC模板，没有手机模板。
+2. 未登录用户，网站首页会显示一个banner，不喜欢的同学可以去把这个文件删掉，或者清空里面的内容：/views/default/global/guest_banner.tpl.htm  
+3. 模板只有PC模板，没有手机模板。
