@@ -14,7 +14,7 @@ Github地址：https://github.com/imningfeng/WeCenterDefault
 ## 模板简介
 
 不知道该说些什么，WeCenter牛逼！  
-这个模板可以三色换肤，超级漂亮，美滋滋！
+这个模板可以三色换肤，超级漂亮，代码开源！
 而且免费！！！
 
 ## 安装方法
